@@ -1,0 +1,29 @@
+class AppImage {
+  static String secbk = "assets/images/boarder_bk.png";
+  static String secLogo = "assets/images/logo_border.png";
+  static String facebook = "assets/icons/facebook_one.png";
+  static String google = "assets/icons/google_one.png";
+  static String apple = "assets/icons/apple_one.png";
+  static String search = "assets/icons/search_icon.png";
+  static String call = "assets/icons/call_logo.png";
+  static String videocall = "assets/icons/video_call_icon.png";
+  static String contact = "assets/icons/contact_icon.png";
+  static String four = "assets/images/botam_four.png";
+  static String three = "assets/images/botam_three.png";
+  static String one = "assets/images/contact_one.png";
+  static String five = "assets/images/botam_five.png";
+  static String two = "assets/images/contact_two.png";
+  static String cothree = "assets/images/contact_three.png";
+  static String homelogo = "assets/images/home_logo.png";
+  static String groupone = "assets/images/group_one.png";
+  static String gtwo = "assets/images/group_two.png";
+  static String pollone = "assets/images/poll_one.png";
+  static String mesicon = "assets/icons/message_icon.png";
+  static String videouser = "assets/icons/video_call_user.png";
+  static String calluser = "assets/icons/call_user.png";
+  static String moreuser = "assets/icons/more_user.png";
+  static String userone = "assets/images/user_one.png";
+  static String usertwo = "assets/images/user_two.png";
+  static String userthree = "assets/images/user_three.png";
+  static String otpbk = "assets/images/otp_bk.png";
+}
