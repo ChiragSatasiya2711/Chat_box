@@ -15,6 +15,7 @@ class AuthService {
         accessToken: googleauth.accessToken,
         idToken: googleauth.idToken,
       );
+
       final accessToken = googleauth.accessToken;
       final refreshToken = googleauth.idToken;
       if (accessToken!.isEmpty || accessToken == null) {

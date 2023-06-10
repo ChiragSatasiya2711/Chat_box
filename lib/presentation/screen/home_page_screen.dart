@@ -36,45 +36,47 @@ class _HomePageScreenState extends State<HomePageScreen> {
           ? Column(
               children: [
                 Expanded(
-                  child: Column(
-                    children: [
-                      SizedBox(height: height * 0.06),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          GestureDetector(
-                            onTap: () => Get.to(const SearchScreen()),
-                            child: Image.asset(AppImage.search),
-                          ),
-                          Text(
-                            AppText.home,
-                            style: TextStyle(fontSize: width * 0.05, fontWeight: FontWeight.bold, color: AppColor.white),
-                          ),
-                          GestureDetector(onTap: () => Get.to(const GroupScreen()), child: Image.asset(AppImage.homelogo)),
-                        ],
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(left: 20, top: 20),
-                        height: height * 0.1,
-                        child: ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) => Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Image.asset(
-                                AppList.userData["userData"][index]["image"],
-                              ),
-                              Text(
-                                AppList.userData["userData"][index]["data"],
-                                style: TextStyle(color: AppColor.white),
-                              ),
-                            ],
-                          ),
-                          separatorBuilder: (context, index) => const SizedBox(width: 20),
-                          itemCount: AppList.userData["userData"].length,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(height: height * 0.06),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            GestureDetector(
+                              onTap: () => Get.to(const SearchScreen()),
+                              child: Image.asset(AppImage.search),
+                            ),
+                            Text(
+                              AppText.home,
+                              style: TextStyle(fontSize: width * 0.05, fontWeight: FontWeight.bold, color: AppColor.white),
+                            ),
+                            GestureDetector(onTap: () => Get.to(const GroupScreen()), child: Image.asset(AppImage.homelogo)),
+                          ],
                         ),
-                      ),
-                    ],
+                        Container(
+                          margin: const EdgeInsets.only(left: 20, top: 20),
+                          height: height * 0.1,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) => Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Image.asset(
+                                  AppList.userData["userData"][index]["image"],
+                                ),
+                                Text(
+                                  AppList.userData["userData"][index]["data"],
+                                  style: TextStyle(color: AppColor.white),
+                                ),
+                              ],
+                            ),
+                            separatorBuilder: (context, index) => const SizedBox(width: 20),
+                            itemCount: AppList.userData["userData"].length,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Column(

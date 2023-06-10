@@ -1,9 +1,12 @@
-import 'package:chat_box/presentation/screen/sign_in_screen.dart';
-import 'package:chat_box/utils/App_text.dart';
+import 'package:chat_box/data/controller/globle_controller.dart';
+import 'package:chat_box/presentation/screen/one_boarding_screen.dart';
 import 'package:chat_box/utils/app_image.dart';
+import 'package:chat_box/utils/app_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/get_instance.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
 import '../../utils/app_color.dart';
@@ -17,6 +20,7 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  GlobalController global = Get.find();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -42,7 +46,15 @@ class _SettingScreenState extends State<SettingScreen> {
                   IconButton(
                     onPressed: () {
                       FirebaseAuth.instance.signOut();
-                      Get.off(const SignINScreen());
+                      Get.off(const OneBoardingScreen());
+                      Fluttertoast.showToast(
+                        msg: "This Is Id Is LogOut ",
+                        toastLength: Toast.LENGTH_LONG,
+                        gravity: ToastGravity.BOTTOM,
+                        backgroundColor: Colors.black,
+                        textColor: Colors.white,
+                        fontSize: 16.0,
+                      );
                     },
                     icon: Icon(
                       Icons.logout_rounded,
@@ -105,6 +117,31 @@ class _SettingScreenState extends State<SettingScreen> {
                           AppList.settingUser["settingUser"][index]["treOne"],
                           style: TextStyle(color: AppColor.black10, fontSize: 12),
                         ),
+                        trailing: index == 1
+                            ? SingleChildScrollView(
+                                physics: NeverScrollableScrollPhysics(),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text("Dark Mode"),
+                                    Switch(
+                                      value: global.dark,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          global.dark = value;
+                                        });
+                                        if (value == true) {
+                                          Get.changeThemeMode(ThemeMode.dark);
+                                        } else {
+                                          Get.changeThemeMode(ThemeMode.light);
+                                        }
+                                      },
+                                    )
+                                  ],
+                                ),
+                              )
+                            : SizedBox(),
                       ),
                       separatorBuilder: (context, index) => const SizedBox(height: 15),
                       itemCount: AppList.settingUser["settingUser"].length,

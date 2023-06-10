@@ -28,6 +28,7 @@ class GlobalController extends GetxController {
 
   List<MsgData> msgList = [];
   List massage = [];
+  bool dark = true;
 
   TextEditingController searchController = TextEditingController();
   List fooList = [];
@@ -36,12 +37,10 @@ class GlobalController extends GetxController {
 
   final ImagePicker picker = ImagePicker();
 
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-
   CollectionReference users = FirebaseFirestore.instance.collection('users');
-
+  XFile? photo;
   Future<void> pickImage() async {
-    final XFile? photo = await picker.pickImage(source: ImageSource.camera);
+    photo = await picker.pickImage(source: ImageSource.camera);
   }
 
   Future<void> pickgallary() async {
