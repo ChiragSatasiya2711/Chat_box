@@ -43,16 +43,14 @@ dependencies:
   get: ^4.6.5
   firebase_core:
   firebase_auth:
-  cloud_firestore: ^4.8.0
-  firebase_storage: ^11.2.1
+  cloud_firestore:
   google_sign_in: ^6.1.3
   fluttertoast: ^8.2.2
   flutter_facebook_auth:
-  flutter_login_facebook: ^1.7.0
-  flutter_facebook_keyhash: ^0.0.4
+  flutter_login_facebook:
+  flutter_facebook_keyhash:
   intl_phone_field: ^3.1.0
   pinput:
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

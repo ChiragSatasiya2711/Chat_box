@@ -36,8 +36,6 @@ class GlobalController extends GetxController {
 
   final ImagePicker picker = ImagePicker();
 
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   Future<void> pickImage() async {

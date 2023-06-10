@@ -6,6 +6,8 @@ import 'package:chat_box/presentation/screen/sign_up_screen.dart';
 import 'package:chat_box/utils/app_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:flutter_facebook_keyhash/flutter_facebook_keyhash.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
@@ -26,10 +28,21 @@ class OneBoardingScreen extends StatefulWidget {
 class _OneBoardingScreenState extends State<OneBoardingScreen> {
   String country = "";
   GlobalController global = Get.put(GlobalController());
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   String? _verificationCode;
   final TextEditingController otpController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    printKeyHash();
+  }
+
+  void printKeyHash() async {
+    print('-----');
+    String? key = await FlutterFacebookKeyhash.getFaceBookKeyHash ?? 'Unknown platform version';
+    print(key ?? "");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +100,12 @@ class _OneBoardingScreenState extends State<OneBoardingScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(AppImage.facebook),
+                      GestureDetector(
+                        onTap: () async {
+                          await signInWithFacebook();
+                        },
+                        child: Image.asset(AppImage.facebook),
+                      ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: width * 0.06),
                         child: GestureDetector(
@@ -247,10 +265,10 @@ class _OneBoardingScreenState extends State<OneBoardingScreen> {
                                 onSubmitted: (pin) async {
                                   try {
                                     await FirebaseAuth.instance.signInWithCredential(PhoneAuthProvider.credential(verificationId: _verificationCode!, smsCode: pin)).then((value) async {
-                                      print("=======>++++++$_verificationCode");
-                                      print("=======>---------$value");
+                                      debugPrint("=======>++++++$_verificationCode");
+                                      debugPrint("=======>---------$value");
                                       if (value.user != null) {
-                                        print("==========><===========user${value.user}");
+                                        debugPrint("==========><===========user${value.user}");
                                         Fluttertoast.showToast(
                                           msg: "This is Number Login success full",
                                           toastLength: Toast.LENGTH_LONG,
@@ -343,21 +361,29 @@ class _OneBoardingScreenState extends State<OneBoardingScreen> {
   }
 
   _verifyPhone() async {
-    print(
+    debugPrint(
       "+ ${country + global.numberController.text}",
     );
     await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: "+ ${country + global.numberController.text}",
+        phoneNumber: country.isEmpty ? "+91${global.numberController.text}" : "+ ${country + global.numberController.text}",
         verificationCompleted: (PhoneAuthCredential credential) async {
           await FirebaseAuth.instance.signInWithCredential(credential).then((value) async {
             if (value.user != null) {
-              print("========>user");
+              debugPrint("========>user");
+              Fluttertoast.showToast(
+                msg: "This is Number Login success full",
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM,
+                backgroundColor: Colors.black,
+                textColor: Colors.white,
+                fontSize: 16.0,
+              );
               Get.off(const HomePageScreen());
             }
           });
         },
         verificationFailed: (FirebaseAuthException e) {
-          print(e.message);
+          debugPrint(e.message);
         },
         codeSent: (String? verficationID, int? resendToken) {
           setState(() {
@@ -369,6 +395,14 @@ class _OneBoardingScreenState extends State<OneBoardingScreen> {
             _verificationCode = verificationID;
           });
         },
-        timeout: const Duration(seconds: 60));
+        timeout: const Duration(seconds: 10));
+  }
+
+  Future<UserCredential> signInWithFacebook() async {
+    final LoginResult loginResult = await FacebookAuth.instance.login();
+
+    final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken!.token);
+
+    return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
   }
 }

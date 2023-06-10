@@ -3,6 +3,7 @@ import 'package:chat_box/presentation/screen/home_page_screen.dart';
 import 'package:chat_box/utils/App_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import '../../utils/app_color.dart';
@@ -187,7 +188,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 null;
                               }
                             },
-                            obscureText: true,
                             decoration: InputDecoration(
                                 labelText: AppText.cpsd,
                                 labelStyle: TextStyle(
@@ -210,11 +210,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
                                 userSignUp();
-                                global.nameController.clear();
-                                global.emailController.clear();
-                                global.psdController.clear();
-                                global.cpsdController.clear();
-                                Get.to(const HomePageScreen());
                               }
                             },
                             child: Text(
@@ -247,13 +242,43 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
       global.user = FirebaseAuth.instance.currentUser;
       debugPrint("User data --------->> $global.user");
-
-      Get.off(HomePageScreen());
+      if (global.user != null) {
+        global.user!.sendEmailVerification();
+        global.users
+            .add({
+              'user_id': global.user!.uid,
+              'full_name': global.nameController.text,
+              'email': global.emailController.text,
+            })
+            .then((value) => print("User Added"))
+            .catchError((error) => print("Failed to add user: $error"));
+        Get.off(HomePageScreen());
+        global.nameController.clear();
+        global.emailController.clear();
+        global.psdController.clear();
+        global.cpsdController.clear();
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         debugPrint('The password provided is too weak.');
+        return Fluttertoast.showToast(
+          msg: "This is Password was Week",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
       } else if (e.code == 'email-already-in-use') {
         debugPrint('The account already exists for that email.');
+        return Fluttertoast.showToast(
+          msg: "This is Email Is Already In Use",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
       }
     } catch (e) {
       debugPrint(e.toString());

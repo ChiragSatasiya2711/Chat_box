@@ -4,10 +4,8 @@ import 'package:chat_box/presentation/screen/home_page_screen.dart';
 import 'package:chat_box/utils/App_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 
 import '../../utils/app_color.dart';
 import '../../utils/app_image.dart';
@@ -185,9 +183,6 @@ class _SignINScreenState extends State<SignINScreen> {
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
                                 loginUser();
-                                global.emailController.clear();
-                                global.passwordController.clear();
-                                Get.to(const HomePageScreen());
                               }
                             },
                             child: Text(
@@ -228,19 +223,49 @@ class _SignINScreenState extends State<SignINScreen> {
 
       global.user = FirebaseAuth.instance.currentUser;
 
-      debugPrint("User data --------->> $global.user");
-
-      Get.off(HomePageScreen());
+      debugPrint("User data --------->> ${global.user}");
+      if (global.user != null) {
+        debugPrint("======__________----><.${global.user!.emailVerified}");
+        Get.off(HomePageScreen());
+        global.emailController.clear();
+        global.passwordController.clear();
+        Fluttertoast.showToast(
+          msg: "This is Login success full",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      } else
+        null;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-email') {
         debugPrint('The email provided is wrong.');
       } else if (e.code == 'user-not-found') {
         debugPrint('No user found for that email.');
+        return Fluttertoast.showToast(
+          msg: "This is User Is Not create",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
       } else if (e.code == 'wrong-password') {
         debugPrint('Wrong password provided for that user.');
+        return Fluttertoast.showToast(
+          msg: "This is Password is wrong",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
       } else if (e.code == 'unknown') {
         debugPrint('Please provide email and password');
       }
+      print(e.message);
     }
   }
 }

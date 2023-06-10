@@ -1,8 +1,9 @@
-import 'package:chat_box/presentation/screen/sign_in_screen.dart';
+import 'package:chat_box/presentation/screen/one_boarding_screen.dart';
 import 'package:chat_box/utils/App_text.dart';
 import 'package:chat_box/utils/app_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
@@ -42,7 +43,15 @@ class _SettingScreenState extends State<SettingScreen> {
                   IconButton(
                     onPressed: () {
                       FirebaseAuth.instance.signOut();
-                      Get.off(const SignINScreen());
+                      Get.off(const OneBoardingScreen());
+                      Fluttertoast.showToast(
+                        msg: "This Is Id Is LogOut ",
+                        toastLength: Toast.LENGTH_LONG,
+                        gravity: ToastGravity.BOTTOM,
+                        backgroundColor: Colors.black,
+                        textColor: Colors.white,
+                        fontSize: 16.0,
+                      );
                     },
                     icon: Icon(
                       Icons.logout_rounded,
