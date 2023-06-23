@@ -7,6 +7,10 @@ import 'package:chat_box/utils/app_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+<<<<<<< HEAD
+=======
+import 'package:flutter_facebook_keyhash/flutter_facebook_keyhash.dart';
+>>>>>>> 15c4d9ddc06f210b80437db3822d78954351e1d4
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
@@ -31,6 +35,18 @@ class _OneBoardingScreenState extends State<OneBoardingScreen> {
   String country = "";
   UserCredential? userCredential;
   final TextEditingController otpController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    printKeyHash();
+  }
+
+  void printKeyHash() async {
+    print('-----');
+    String? key = await FlutterFacebookKeyhash.getFaceBookKeyHash ?? 'Unknown platform version';
+    print(key ?? "");
+  }
 
   @override
   Widget build(BuildContext context) {

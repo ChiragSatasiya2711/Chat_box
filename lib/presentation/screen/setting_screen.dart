@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import 'package:chat_box/data/controller/globle_controller.dart';
 import 'package:chat_box/presentation/screen/one_boarding_screen.dart';
+=======
+import 'package:chat_box/presentation/screen/one_boarding_screen.dart';
+import 'package:chat_box/utils/App_text.dart';
+>>>>>>> 15c4d9ddc06f210b80437db3822d78954351e1d4
 import 'package:chat_box/utils/app_image.dart';
 import 'package:chat_box/utils/app_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';

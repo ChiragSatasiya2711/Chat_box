@@ -203,7 +203,11 @@ packages:
       name: firebase_core_web
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.6.0"
+=======
+    version: "2.5.0"
+>>>>>>> 15c4d9ddc06f210b80437db3822d78954351e1d4
   flutter:
     dependency: "direct main"
     description: flutter

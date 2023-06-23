@@ -9,7 +9,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+<<<<<<< HEAD
 import 'package:shared_preferences/shared_preferences.dart';
+=======
+>>>>>>> 15c4d9ddc06f210b80437db3822d78954351e1d4
 
 import '../../utils/app_color.dart';
 import '../../utils/app_image.dart';
@@ -230,10 +233,13 @@ class _SignINScreenState extends State<SignINScreen> {
       debugPrint("User data --------->> ${global.user}");
       if (global.user != null) {
         debugPrint("======__________----><.${global.user!.emailVerified}");
+<<<<<<< HEAD
         final prefs = await SharedPreferences.getInstance();
         DocumentSnapshot data = await global.users.doc(global.user!.uid).get();
 
         await prefs.setString('login_data', jsonEncode(data.data()));
+=======
+>>>>>>> 15c4d9ddc06f210b80437db3822d78954351e1d4
         Get.off(HomePageScreen());
         global.emailController.clear();
         global.passwordController.clear();
