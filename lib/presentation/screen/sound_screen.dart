@@ -1,5 +1,9 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:chat_box/presentation/screen/video_player_screen.dart';
+import 'package:chat_box/utils/app_list.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class SoundAudioScreen extends StatefulWidget {
   const SoundAudioScreen({Key? key}) : super(key: key);
@@ -60,22 +64,28 @@ class _SoundAudioScreenState extends State<SoundAudioScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFF253334),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: height * 0.09),
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: height * 0.1),
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(vertical: height * 0.04),
-              child: Image.asset("assets/images/song.png", scale: 1.2),
-            ),
-            Text(
-              "Painting Forest",
-              style: TextStyle(
-                fontSize: width * 0.055,
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
+              padding: EdgeInsets.symmetric(vertical: height * 0.05),
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Image.asset("assets/images/otp_bk.png", scale: 1.2),
+                  Padding(
+                    padding: EdgeInsets.only(left: width * 0.22, top: 7),
+                    child: Text(
+                      formatTime(
+                        timeInSecond: position.inSeconds,
+                      ),
+                      style: const TextStyle(color: Colors.black, fontSize: 20),
+                    ),
+                  ),
+                ],
               ),
             ),
-            SizedBox(height: height * 0.25),
+            SizedBox(height: height * 0.02),
             Slider(
               value: position.inSeconds.toDouble(),
               min: 0,
@@ -92,11 +102,11 @@ class _SoundAudioScreenState extends State<SoundAudioScreen> {
                   formatTime(
                     timeInSecond: position.inSeconds,
                   ),
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                 ),
                 Text(
                   formatTime(timeInSecond: duration.inSeconds),
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                 ),
               ],
             ),
@@ -106,14 +116,14 @@ class _SoundAudioScreenState extends State<SoundAudioScreen> {
               children: [
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(Icons.shuffle, color: Colors.white, size: 35),
+                  icon: const Icon(Icons.shuffle, color: Colors.white, size: 35),
                 ),
                 IconButton(
                   onPressed: () {},
                   icon: Icon(Icons.skip_previous_rounded, color: Colors.white, size: width * 0.09),
                 ),
                 IconButton(
-                  icon: play == false ? Icon(Icons.play_arrow) : Icon(Icons.pause),
+                  icon: play == false ? const Icon(Icons.play_arrow) : const Icon(Icons.pause),
                   onPressed: () {
                     play = !play;
                     setState(() {
@@ -132,11 +142,20 @@ class _SoundAudioScreenState extends State<SoundAudioScreen> {
                   icon: Icon(Icons.skip_next, color: Colors.white, size: width * 0.09),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    print(AppList.musics["musics"]);
+                  },
                   icon: Icon(Icons.repeat, color: Colors.white, size: width * 0.09),
                 ),
               ],
             ),
+            const SizedBox(height: 30),
+            ElevatedButton(
+              onPressed: () {
+                Get.to(VideoPlayerScreen());
+              },
+              child: const Text("video Play"),
+            )
           ],
         ),
       ),

@@ -193,6 +193,16 @@ class AppList {
       {"iconOne": "assets/icons/botam_icon_six.png", "titleOne": "Location", "treOne": "Share your location"},
     ],
   };
+  static Map musics = {
+    "musics": [
+      {"iconOne": "assets/icons/botam_icon_one.png", "titleOne": "Music One"},
+      {"iconOne": "assets/icons/botam_icon_two.png", "titleOne": "Music Two"},
+      {"iconOne": "assets/icons/botam_icon_three.png", "titleOne": "Music Three"},
+      {"iconOne": "assets/icons/botam_icon_four.png", "titleOne": "Music Four"},
+      {"iconOne": "assets/icons/botam_icon_five.png", "titleOne": "Music Five"},
+      {"iconOne": "assets/icons/botam_icon_six.png", "titleOne": "Music Six"},
+    ],
+  };
 
   static List data = [
     "assets/images/group_two.png",

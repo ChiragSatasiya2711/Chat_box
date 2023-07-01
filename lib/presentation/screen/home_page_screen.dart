@@ -4,6 +4,7 @@ import 'package:chat_box/presentation/screen/group_screen.dart';
 import 'package:chat_box/presentation/screen/message_screen.dart';
 import 'package:chat_box/presentation/screen/search_screen.dart';
 import 'package:chat_box/presentation/screen/setting_screen.dart';
+import 'package:chat_box/presentation/screen/sound_screen.dart';
 import 'package:chat_box/presentation/widgets/coman_icons.dart';
 import 'package:chat_box/utils/app_image.dart';
 import 'package:flutter/material.dart';
@@ -59,17 +60,22 @@ class _HomePageScreenState extends State<HomePageScreen> {
                           height: height * 0.1,
                           child: ListView.separated(
                             scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) => Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Image.asset(
-                                  AppList.userData["userData"][index]["image"],
-                                ),
-                                Text(
-                                  AppList.userData["userData"][index]["data"],
-                                  style: TextStyle(color: AppColor.white),
-                                ),
-                              ],
+                            itemBuilder: (context, index) => GestureDetector(
+                              onTap: () {
+                                index == 0 ? Get.to(const SoundAudioScreen()) : SizedBox();
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Image.asset(
+                                    AppList.userData["userData"][index]["image"],
+                                  ),
+                                  Text(
+                                    AppList.userData["userData"][index]["data"],
+                                    style: TextStyle(color: AppColor.white),
+                                  ),
+                                ],
+                              ),
                             ),
                             separatorBuilder: (context, index) => const SizedBox(width: 20),
                             itemCount: AppList.userData["userData"].length,

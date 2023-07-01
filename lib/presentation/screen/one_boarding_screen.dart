@@ -6,7 +6,6 @@ import 'package:chat_box/presentation/screen/sign_up_screen.dart';
 import 'package:chat_box/utils/app_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
@@ -88,12 +87,7 @@ class _OneBoardingScreenState extends State<OneBoardingScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      GestureDetector(
-                        onTap: () async {
-                          await signInWithFacebook();
-                        },
-                        child: Image.asset(AppImage.facebook),
-                      ),
+                      Image.asset(AppImage.facebook),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: width * 0.06),
                         child: GestureDetector(
@@ -389,13 +383,5 @@ class _OneBoardingScreenState extends State<OneBoardingScreen> {
           });
         },
         timeout: const Duration(seconds: 10));
-  }
-
-  Future<UserCredential> signInWithFacebook() async {
-    final LoginResult loginResult = await FacebookAuth.instance.login();
-
-    final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken!.token);
-
-    return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
   }
 }
